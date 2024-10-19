@@ -8,8 +8,8 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4">
+        <nav className="bg-gray-50 sticky top-0">
+            <div className="max-w-8xl mx-auto px-4">
                 <div className="flex justify-between">
 
                     {/* Logo and Links */}

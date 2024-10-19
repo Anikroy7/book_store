@@ -6,7 +6,7 @@ export default function MainLayout({ children }) {
     return (
         <>
             <Navbar />
-            <main className='h-screen'>
+            <main className='px-10'>
                 {children}
             </main>
             <Footer />
