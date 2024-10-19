@@ -1,21 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Loading from './Loading';
 import BookCard from './BookCard';
 import { useAllBooks } from '../../context/allBooks.provider';
 
 function AllBooks() {
-  const { books, isLoading, nextUrl, prevUrl, setCurrentPage, currentPage, uniqueGenres, selectedGenre, setSelectedGenre } = useAllBooks();
+  const { books, isLoading, nextUrl, prevUrl, setCurrentPage, currentPage, uniqueGenres, selectedGenre, setSelectedGenre, wishlists, setWishLists } = useAllBooks();
   if (isLoading) return <Loading />
 
-  const [wishlists, setWishLists] = useState([]);
-  const handleWishlist = (id) => {
-    if (wishlists.includes(id)) {
-      setWishLists([...wishlists.filter((wid) => wid !== id)])
-    } else {
-      setWishLists([...wishlists, id])
+
+
+  useEffect(() => {
+    const wishlistsInLocalStorage = localStorage.getItem("wishlists");
+    if (wishlistsInLocalStorage) {
+      setWishLists(JSON.parse(wishlistsInLocalStorage));
     }
-  }
-  console.log(wishlists)
+  }, []);
+
+  const handleWishlist = (id) => {
+    const updatedWishlists = [...wishlists];
+    if (updatedWishlists.includes(id)) {
+      const newWishlists = updatedWishlists.filter((wid) => wid !== id);
+      setWishLists(newWishlists);
+      localStorage.setItem("wishlists", JSON.stringify(newWishlists));
+    } else {
+      updatedWishlists.push(id);
+      setWishLists(updatedWishlists);
+      localStorage.setItem("wishlists", JSON.stringify(updatedWishlists));
+    }
+  };
   return (
     <>
       <div className='w-[100%] py-5 flex justify-end'>
@@ -35,8 +47,10 @@ function AllBooks() {
 
 
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {
-          books?.map((book) => <BookCard key={book.id} book={book} handleWishlist={handleWishlist} />)
+        {books && books.length > 0 ? books?.map((book) => <BookCard key={book.id} book={book} handleWishlist={handleWishlist} wishlists={wishlists} />)
+          : <div className="flex justify-center items-center h-full">
+            <p className="text-xl text-gray-500">No books available...</p>
+          </div>
         }
       </div>
       <div className="flex justify-center mt-4">

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa'; 
+import { FaSearch } from 'react-icons/fa';
 import useDebounce from '../../hooks/useDebounce';
 import { useAllBooks } from '../../context/allBooks.provider';
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [searchText, setSearchText]= useState()
-    const { setSearchQuery } = useAllBooks()
+    const [searchText, setSearchText] = useState()
+    const { setSearchQuery , wishlists} = useAllBooks()
     const value = useDebounce(searchText);
     const handleMenuToggle = () => {
         setMenuOpen(!menuOpen);
     };
-
+    
     useEffect(() => {
         setSearchQuery(value)
     }, [value])
@@ -39,8 +39,15 @@ export default function Navbar() {
                         {/* Desktop Menu */}
                         <div className="hidden md:flex items-center space-x-1">
                             <Link to="/" className="py-5 px-3 text-gray-700 hover:text-gray-900">Home</Link>
-                            <Link to="/wishlists" className="py-5 px-3 text-gray-700 hover:text-gray-900">Wishlists</Link>
-                        </div>
+                            <Link to="/wishlists" className="py-5 px-3 text-gray-700 hover:text-gray-900 flex items-center">
+                                Wishlists
+                                {wishlists.length > 0 && (
+                                    <span className="ml-2 bg-red-500 text-white text-sm rounded-full px-2 py-1">
+                                        {wishlists.length}
+                                    </span>
+                                )}
+                                </Link>
+                            </div>
                     </div>
 
                     {/* Search Bar */}

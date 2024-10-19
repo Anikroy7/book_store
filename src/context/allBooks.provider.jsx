@@ -15,7 +15,8 @@ const AllBooksProvider = ({ children }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
     const [uniqueGenres, setUniqueGenres] = useState([])
-    const [selectedGenre, setSelectedGenre] = useState('')
+    const [selectedGenre, setSelectedGenre] = useState('');
+    const [wishlists, setWishLists] = useState([]);
     useEffect(() => {
         setIsLoading(true);
         const fetchBooks = async () => {
@@ -56,7 +57,9 @@ const AllBooksProvider = ({ children }) => {
                 uniqueGenres,
                 setUniqueGenres,
                 selectedGenre,
-                setSelectedGenre
+                setSelectedGenre,
+                wishlists,
+                setWishLists
             }}
         >
             {children}

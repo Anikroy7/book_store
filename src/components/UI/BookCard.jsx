@@ -1,9 +1,9 @@
 import React from 'react'
-import { FaEye, FaHeart } from 'react-icons/fa'
+import { FaEye, FaHeart, FaRegHeart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-function BookCard({ book, handleWishlist }) {
-   
+function BookCard({ book, handleWishlist, wishlists }) {
+
     return (
         <div key={book.id} className="p-4 bg-white rounded-lg shadow-md flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
             {/* Book Cover */}
@@ -30,15 +30,23 @@ function BookCard({ book, handleWishlist }) {
 
             {/* Buttons Section */}
             <div className="flex justify-between items-center">
+                
+                
                 {/* View Details Button */}
                 <Link to={`/book/${book.id}`} className="flex   items-center px-4 py-2  transition-colors hover:text-red-950">
                     <FaEye className="mr-2" /> View Details
                 </Link>
 
                 {/* Wishlist Button */}
-                <span onClick={() => handleWishlist(book.id)} className="flex items-center px-4  cursor-pointer underline  py-2 transition-colors hover:text-red-950">
-                    <FaHeart className="mr-2" /> add to wishlist
-                </span>
+                {
+                    wishlists.includes(book.id) ? (
+                        <span onClick = { () => handleWishlist(book.id)} className="flex items-center px-4  cursor-pointer underline  py-2 transition-colors hover:text-red-950">
+                            <FaHeart className="mr-2" /> in wishlist
+                        </span>
+                    ) : <span onClick={() => handleWishlist(book.id)} className="flex items-center px-4  cursor-pointer underline  py-2 transition-colors hover:text-red-950">
+                        <FaRegHeart className="mr-2" /> add to wishlist
+                    </span>
+                }
             </div>
         </div>
     )
