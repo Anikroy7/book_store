@@ -2,8 +2,8 @@ import React from 'react'
 import { FaEye, FaHeart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-function BookCard({ book }) {
-    
+function BookCard({ book, handleWishlist }) {
+   
     return (
         <div key={book.id} className="p-4 bg-white rounded-lg shadow-md flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
             {/* Book Cover */}
@@ -36,9 +36,9 @@ function BookCard({ book }) {
                 </Link>
 
                 {/* Wishlist Button */}
-                <sapn className="flex items-center px-4  cursor-pointer underline  py-2 transition-colors hover:text-red-950">
+                <span onClick={() => handleWishlist(book.id)} className="flex items-center px-4  cursor-pointer underline  py-2 transition-colors hover:text-red-950">
                     <FaHeart className="mr-2" /> add to wishlist
-                </sapn>
+                </span>
             </div>
         </div>
     )

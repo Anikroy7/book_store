@@ -9,21 +9,30 @@ const AllBooksContext = createContext(undefined);
 
 const AllBooksProvider = ({ children }) => {
     const [books, setBooks] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [prevUrl, setPrevUrl] = useState(null);
     const [nextUrl, setNextUrl] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
-
+    const [uniqueGenres, setUniqueGenres] = useState([])
+    const [selectedGenre, setSelectedGenre] = useState('')
     useEffect(() => {
+        setIsLoading(true);
         const fetchBooks = async () => {
-            setIsLoading(true);
             try {
-                const response = await fetch(`https://gutendex.com/books?page=${currentPage}&search=${searchQuery}`);
+
+                const response = await fetch(`https://gutendex.com/books?page=${currentPage}&search=${searchQuery || ''}&topic=${selectedGenre || ''}`);
                 const data = await response.json();
-                setBooks(data.results);
-                setNextUrl(data.next);
-                setPrevUrl(data.previous);
+
+                const genres = new Set();
+                data?.results?.forEach((book) => {
+                    book?.subjects?.forEach((subject) => genres.add(subject));
+                });
+
+                setBooks(data?.results);
+                setNextUrl(data?.next);
+                setPrevUrl(data?.previous);
+                setUniqueGenres(Array.from(genres))
             } catch (error) {
                 console.error("Error fetching books:", error);
             } finally {
@@ -32,7 +41,7 @@ const AllBooksProvider = ({ children }) => {
         };
 
         fetchBooks();
-    }, [currentPage, searchQuery]);
+    }, [currentPage, searchQuery, selectedGenre]);
 
     return (
         <AllBooksContext.Provider
@@ -43,7 +52,11 @@ const AllBooksProvider = ({ children }) => {
                 nextUrl,
                 currentPage,
                 setCurrentPage,
-                setSearchQuery
+                setSearchQuery,
+                uniqueGenres,
+                setUniqueGenres,
+                selectedGenre,
+                setSelectedGenre
             }}
         >
             {children}
