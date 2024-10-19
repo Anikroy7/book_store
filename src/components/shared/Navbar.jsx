@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -16,20 +17,20 @@ export default function Navbar() {
                     <div className="flex space-x-4">
                         {/* Logo */}
                         <div>
-                            <a href="#" className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+                            <Link to="/" className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
                                 <img 
                                     width={100} 
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3mrqcZyym23qWYQUHnmXf30Bj10B917RcQLck-epMLEUrUfK9M1dK-ZdN8roDBRNZ6NQ&usqp=CAU" 
                                     alt="Logo" 
                                 />
                                 <span className="font-bold">Book Store</span>
-                            </a>
+                            </Link>
                         </div>
 
                         {/* Desktop Menu */}
                         <div className="hidden md:flex items-center space-x-1">
-                            <a href="#" className="py-5 px-3 text-gray-700 hover:text-gray-900">Home</a>
-                            <a href="#" className="py-5 px-3 text-gray-700 hover:text-gray-900">Wishlists</a>
+                            <Link to="/" className="py-5 px-3 text-gray-700 hover:text-gray-900">Home</Link>
+                            <Link to="/wishlists" className="py-5 px-3 text-gray-700 hover:text-gray-900">Wishlists</Link>
                         </div>
                     </div>
 
@@ -46,8 +47,8 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             <div className={`mobile-menu ${menuOpen ? 'block' : 'hidden'} md:hidden`}>
-                <a href="#" className="block py-2 px-4 text-sm hover:bg-gray-200">Home</a>
-                <a href="#" className="block py-2 px-4 text-sm hover:bg-gray-200">Wishlists</a>
+                <Link to="/" className="block py-2 px-4 text-sm hover:bg-gray-200">Home</Link>
+                <Link to="/wishlists" className="block py-2 px-4 text-sm hover:bg-gray-200">Wishlists</Link>
             </div>
         </nav>
     );

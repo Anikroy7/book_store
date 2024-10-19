@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function BookCard({ book }) {
     return (
@@ -16,7 +17,7 @@ function BookCard({ book }) {
                 {book.subjects[0] || "Unknown Genre"}
             </p>
             <div className="flex justify-between">
-                <button className="px-4 py-2 bg-blue-500 text-white rounded-md">View Details</button>
+                <Link to={`/book/${book.id}`} className="px-4 py-2 bg-blue-500 text-white rounded-md">View Details</Link>
                 <button className="px-4 py-2 bg-green-500 text-white rounded-md">Wishlist</button>
             </div>
         </div>

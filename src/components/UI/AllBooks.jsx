@@ -29,7 +29,7 @@ function AllBooks() {
         <button
           onClick={() => {
             if (nextUrl) {
-              setCurrentPage(Number(currentPage + 1git));
+              setCurrentPage(Number(currentPage + 1));
             }
           }}
           disabled={!nextUrl}

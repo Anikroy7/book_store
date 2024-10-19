@@ -13,7 +13,7 @@ export const useGetAllBooks = () => {
             .then(data => {
                 setBooks(data.results)
                 setNextUrl(data.next)
-                setPrevUrl(data.prev)
+                setPrevUrl(data.previous)
                 console.log('rwq',data)
             })
             .finally(()=>{
