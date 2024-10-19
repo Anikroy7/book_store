@@ -6,15 +6,16 @@ import { useAllBooks } from '../../context/allBooks.provider';
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [searchText, setSearchText] = useState()
-    const { setSearchQuery , wishlists} = useAllBooks()
+    const [searchText, setSearchText] = useState(JSON.parse(localStorage.getItem('searchQuery')) || '')
+    const { setSearchQuery, wishlists } = useAllBooks()
     const value = useDebounce(searchText);
     const handleMenuToggle = () => {
         setMenuOpen(!menuOpen);
     };
-    
+
     useEffect(() => {
-        setSearchQuery(value)
+        setSearchQuery(value);
+        localStorage.setItem('searchQuery', JSON.stringify(searchText))
     }, [value])
 
     return (
@@ -46,8 +47,8 @@ export default function Navbar() {
                                         {wishlists.length}
                                     </span>
                                 )}
-                                </Link>
-                            </div>
+                            </Link>
+                        </div>
                     </div>
 
                     {/* Search Bar */}
@@ -58,6 +59,7 @@ export default function Navbar() {
                                 type="text"
                                 className="bg-gray-100 border w-full border-gray-300 text-gray-700 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-400"
                                 placeholder="Search for books..."
+                                value={searchText}
                             />
                             <FaSearch className="absolute left-3 top-3 text-gray-500" />
                         </div>

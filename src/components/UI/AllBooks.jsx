@@ -28,13 +28,17 @@ function AllBooks() {
       localStorage.setItem("wishlists", JSON.stringify(updatedWishlists));
     }
   };
+  const handleSetSelectedGenre=(value)=>{
+    setSelectedGenre(value);
+    localStorage.setItem('genreQuery', JSON.stringify(value))
+  }
   return (
     <>
       <div className='w-[100%] py-5 flex justify-end'>
 
         <select
           value={selectedGenre}
-          onChange={(e) => setSelectedGenre(e.target.value)}
+          onChange={(e) => handleSetSelectedGenre(e.target.value)}
           className="p-2 border rounded-md w-full max-w-md"
         >
           <option value="">All Genres</option>
